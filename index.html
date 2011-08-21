@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TravellingMe Demo</title>
+  
+  <script type="text/javascript" src="./jquery.js"></script>
+  <script type="text/javascript" src="./travelling_me.js"></script>
+  <style type="text/css" media="screen">
+    #container{
+      margin: 0 auto;
+      width: 600px;
+    }
+    
+    .travelling-div {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #travelling-2 #container {
+      width: 1014px;
+      height: 168px;
+    }
+    
+    #travelling-2 div.image {
+      float: left;
+      background-color: yellow;
+      padding: 10px;
+    }
+  </style>
+  
+  <script type="text/javascript">
+    var travelling_1 = null;
+    
+    $( function(){
+      travelling_1 = new TravellingMe( '#travelling-1', 873, 290 );
+      travelling_1.setup();
+      
+      travelling_2 = new TravellingMe( '#travelling-2', 1014, 168 );
+      travelling_2.setup();
+    });
+  </script>
+</head>
+<body>
+  <div id="container">
+    <section>
+      <h1>Travelling 01</h1>
+      <div id="travelling-1" class="travelling-div">
+        <img src="town.jpg" />
+      </div>
+    </section>
+    
+    <section>
+      <h1>Travelling 02</h1>
+      <div id="travelling-2" class="travelling-div">
+        <div id="container">
+          <div class="image">
+            <img src="town-1.png" />
+          </div>
+          <div class="image">
+            <img src="town-2.png" />
+          </div>
+          <div class="image">
+            <img src="town-3.png" />
+          </div>
+          <div class="image">
+            <img src="town-4.png" />
+          </div>
+          <div class="image">
+            <img src="town-5.png" />
+          </div>
+          <div class="image">
+            <img src="town-6.png" />
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section>
+      <h1>Travelling 03</h1>
+      <div id="travelling-3" class="travelling-div">
+      </div>
+    </section>
+  </div>
+</body>
+</html>
