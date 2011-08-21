@@ -1,21 +1,64 @@
+/*
+# Travelling Me 
 
+* url: https://github.com/fguillen/TravellingMe
+* author: http://fernandoguillen.info
 
-function TravellingMe( div_selector, width, height, opts ) {
-  this.opts_params = opts;
-  this.div_to_scroll = $( div_selector );
+## Versión
+
+    v0.0.1
+
+## Requirement:
+
+One _<div>_ as _container_ with _overflow: hidden_.
+
+One _element_ as _sub-container_ with a fixed _width_ and _height_ 
+as container of the elements to scroll.
+
+The _sub-container_ has to be at least as _wide_ as the _container_.
+
+## Example
+    <div id="scroll-me" style="with: 600px; height: 200px; overflow:hidden">
+      <img src="my_scroll.jpg" with="1200px" height="400px" />
+    </div>
+      
+    $('#scroll-me').travelling();
+
+## Use: 
+
+    $('#div-id').travelling();
+    
+### With configuration, defaults values
+
+    $('#div-id').travelling({
+      inactive_zone : 20,  // pixels arround div center where the velocity = 0
+      max_velocity  : 10, // maximum pixels to move in one cycle
+      fps           : 20  // frames per second
+    });
+
+*/ 
+
+jQuery.fn.travelling = function( opts ) {
+  return this.each( function() {
+    new TravellingMe( $( this ), opts );
+  });
+};
+
+function TravellingMe( div_to_scroll, opts ) {
+  var opts_params   = opts;
+  var div_to_scroll = div_to_scroll;
   var container_div = null;
-  var step_x = 0;
-  var step_y = 0;
-  var x = 0;
-  var y = 0;
-  var width = width;
-  var height = height;
+  var step_x        = 0;
+  var step_y        = 0;
+  var x             = 0;
+  var y             = 0;
+  var width         = $( '#' + div_to_scroll.attr('id') + ' > *:first' ).width();
+  var height        = $( '#' + div_to_scroll.attr('id') + ' > *:first' ).height();
   
   var opts = {
-    not_sensible_mouse_zone: 20,
-    max_step: 4,
-    velocity_relax: 100,
-    milliseconds_step: 20,
+    inactive_zone : 20,
+    max_velocity  : 10,
+    fps           : 20,
   }
   
   var setup = function() {
@@ -25,55 +68,57 @@ function TravellingMe( div_selector, width, height, opts ) {
     move();
   }
   
-  
   var updateOpts = function() {
-    console.log( "opts_params:" + this.opts_params );
-    console.log( "this:" + this );
-    opts = $.extend( opts, this.opts_params );
+    opts = $.extend( opts, opts_params );
   }
   
-  
   var createDivs = function() {
-    container_div = $( "<div id='travelling-me-container' style='position: absolute; top: 0px; left: 0px; width: " + (width * 2) + "px; height: " + height + "px;'></div>" );
-    var left_portion = $( "<div id='travelling-me-left-portion' class='travelling-me-portion' style='float: left; width: " + width + "px; height: " + height + "px;'></div>" );
+    container_div     = $( "<div id='travelling-me-container' style='position: absolute; top: 0px; left: 0px; width: " + (width * 2) + "px; height: " + height + "px;'></div>" );
+    var left_portion  = $( "<div id='travelling-me-left-portion' class='travelling-me-portion' style='float: left; width: " + width + "px; height: " + height + "px;'></div>" );
     var right_portion = $( "<div id='travelling-me-right-portion' class='travelling-me-portion' style='float: left; width: " + width + "px; height: " + height + "px;'></div>" );
     
-    left_portion.html( this.div_to_scroll.html() );
-    right_portion.html( this.div_to_scroll.html() );
+    left_portion.html( div_to_scroll.html() );
+    right_portion.html( div_to_scroll.html() );
     
-    this.div_to_scroll.empty();
+    div_to_scroll.empty();
     
     left_portion.appendTo( container_div );
     right_portion.appendTo( container_div );
         
-    container_div.appendTo( this.div_to_scroll );
+    container_div.appendTo( div_to_scroll );
   }
   
   var mouseEventActivation = function() {
-    $( document ).mousemove( function( e ){
-    
-      if( mousePointerDistantToDivCenter( e ) > opts['not_sensible_mouse_zone'] ) { 
-        step_x = (divCenter()['x'] - e.pageX) / opts['velocity_relax'];
-        step_y = (divCenter()['y'] - e.pageY) / opts['velocity_relax'];
+    $( div_to_scroll ).mousemove( function( e ){
+
+      var active_zone_vertical    = ( div_to_scroll.height() / 2 ) - opts['inactive_zone'];
+      
+      // horizontal movement
+      var active_zone = ( div_to_scroll.width() / 2 ) - opts['inactive_zone'];
+      var tension     = divCenter()['x'] - e.pageX;
+      if( Math.abs( tension ) > opts['inactive_zone'] ) {
+        tension -= ( opts['inactive_zone'] * ( tension > 0 ? 1 : -1 ) );
       } else {
-        step_x = 0;
-        step_y = 0;
-      }
+        tension = 0;
+      }      
+      step_x = tension * opts['max_velocity'] / active_zone;
       
-      if( Math.abs( step_x ) > opts['max_step'] ){
-        step_x = opts['max_step'] * ( step_x > 0 ? 1 : -1 )
+      // horizontal movement
+      var active_zone = ( div_to_scroll.height() / 2 ) - opts['inactive_zone'];
+      var tension     = divCenter()['y'] - e.pageY;
+      if( Math.abs( tension ) > opts['inactive_zone'] ) {
+        tension -= ( opts['inactive_zone'] * ( tension > 0 ? 1 : -1 ) );
+      } else {
+        tension = 0;
       }
-      
-      if( Math.abs( step_y ) > opts['max_step'] ){
-        step_y = opts['max_step'] * ( step_y > 0 ? 1 : -1 )
-      }
+      step_y = tension * opts['max_velocity'] / active_zone;
     });
   }
   
   var divCenter = function() {
     result = {
-      x: this.div_to_scroll.offset().left + (this.div_to_scroll.width() / 2),
-      y: this.div_to_scroll.offset().top + (this.div_to_scroll.height() / 2)
+      x: div_to_scroll.offset().left + (div_to_scroll.width() / 2),
+      y: div_to_scroll.offset().top + (div_to_scroll.height() / 2)
     }
     
     return result;
@@ -93,24 +138,14 @@ function TravellingMe( div_selector, width, height, opts ) {
     x += step_x;
     y += step_y;
     
-    if( isNaN( x ) ){
-      console.log( 'step_x:' + step_x );
-    }
     
     if( x > 0 ) {
-      console.log( "x:" + x );
-      console.log( "width:" + width );
       x -= width;
-      console.log( "x:" + x );
-      
       container_div.css( 'left', (x - step_x) + 'px' );
     }
     
     if( x < -width ) {
-      console.log( "x:" + x );
-      console.log( "width:" + width );
       x += width;
-      console.log( "x:" + x );
       container_div.css( 'left', (x - step_x) + 'px' );
     }
     
@@ -118,8 +153,8 @@ function TravellingMe( div_selector, width, height, opts ) {
       y = 0;
     }
     
-    if( y < -(height - this.div_to_scroll.height()) ) {
-      y = -(height - this.div_to_scroll.height());
+    if( y < -(height - div_to_scroll.height()) ) {
+      y = -(height - div_to_scroll.height());
     }
     
     container_div.animate( 
@@ -127,12 +162,10 @@ function TravellingMe( div_selector, width, height, opts ) {
         left: x + "px",
         top: y + "px"
       }, 
-      opts['milliseconds_step'],
+      1000 / opts['fps'],
       'linear',
       function(){ move() } 
     );
-    
-    // log();
   }
   
   var log = function() {
@@ -144,9 +177,5 @@ function TravellingMe( div_selector, width, height, opts ) {
     console.log( "container_div.height:" + container_div.height() );
   }
   
-  return {
-    setup: setup,
-    log: log,
-    divCenter: divCenter
-  };
+  setup();
 }
