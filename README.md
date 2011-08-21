@@ -49,6 +49,7 @@ Only tested in Chrome 13.0.782.112.
 
 * Allow _sub-container_ to be less wide than the container.
 * Center _sub-container_.
+* suggestion: option to stop the motion when the mouse moves out of the travelling area
 
 ## License
 
