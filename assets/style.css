@@ -13,6 +13,7 @@ strong {
 pre {
   font-family: "Consolas", monospace;
   padding: 10px;
+  background-color: white;
 }
 
 h1, h2, h3 {

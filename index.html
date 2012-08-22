@@ -79,6 +79,11 @@
     <section>
       <h1>Travelling 01</h1>
       <p>Travelling with vertical movement</p>
+
+<pre>
+$( '#travelling-1' ).travelling();
+</pre>
+
       <div id="travelling-1" class="travelling-div">
         <img src="./assets/town.jpg" width="873px" height="290px" />
       </div>
@@ -87,6 +92,15 @@
     <section>
       <h1>Travelling 02</h1>
       <p>Travelling of multiple elements</p>
+
+<pre>
+$( '#travelling-2' ).travelling({
+  inactive_zone: 10,  // pixels arround div center where the velocity = 0
+  max_velocity: 100,  // max velocity
+  fps: 20             // frames per second
+});
+</pre>
+
       <div id="travelling-2" class="travelling-div">
         <div id="container">
           <div class="image"><img src="./assets/town-1.jpg" /></div>
@@ -102,6 +116,12 @@
     <section>
       <h1>Travelling 03</h1>
       <p>Traveling of a simple list</p>
+
+<pre>      
+$( '#travelling-3' ).travelling({
+  max_velocity: 10  // max velocity
+});
+</pre>
       <div id="travelling-3" class="travelling-div">
         <ul>
           <li>1</li>
