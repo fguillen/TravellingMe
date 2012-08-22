@@ -1,4 +1,4 @@
-# Travelling Me 
+# Travelling Me
 
 ![Travelling Me image](http://farm7.static.flickr.com/6075/6067323142_651b69d2b9.jpg)
 
@@ -7,16 +7,16 @@ Because at the end there is not end.
 ## Versión
 
     v0.0.1
-    
+
 ## Demo page
 
-* [Demo page](http://about.fernandoguillen.info/playing/travelling_me/)
+* [Demo page](http://fguillen.github.com/TravellingMe/)
 
 ## Requirement:
 
 One _div_ as _container_ with _overflow: hidden_.
 
-One _element_ as _sub-container_ with a fixed _width_ and _height_ 
+One _element_ as _sub-container_ with a fixed _width_ and _height_
 as container of the elements to scroll.
 
 The _sub-container_ has to be at least as _wide_ as the _container_.
@@ -26,13 +26,13 @@ The _sub-container_ has to be at least as _wide_ as the _container_.
     <div id="scroll-me" style="with: 600px; height: 200px; overflow:hidden">
       <img src="my_scroll.jpg" with="1200px" height="400px" />
     </div>
-      
+
     $('#scroll-me').travelling();
 
-## Use: 
+## Use:
 
     $('#div-id').travelling();
-    
+
 ### With configuration, defaults values
 
     $('#div-id').travelling({
@@ -40,7 +40,7 @@ The _sub-container_ has to be at least as _wide_ as the _container_.
       max_velocity  : 10, // maximum pixels to move in one cycle
       fps           : 20  // frames per second
     });
-    
+
 ## Support
 
 Only tested in Chrome 13.0.782.112.
