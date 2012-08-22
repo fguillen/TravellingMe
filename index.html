@@ -5,13 +5,13 @@
   <meta name="description" content="Travelling Me is a jQuery plugin for generate infinite horizontal scrolls." />
   <meta name="keywords" content="jQuery, plugin, scroll, travelling" />
   <meta name="author" content="http://fernandoguillen.info" />
-  
+
   <title>TravellingMe Demo</title>
-  
+
   <script type="text/javascript" src="./assets/jquery.js"></script>
   <script type="text/javascript" src="./travelling_me.js"></script>
   <link rel="stylesheet" href="./assets/style.css" ></style>
-  
+
   <style type="text/css" media="screen">
     .travelling-div {
       width: 100%;
@@ -19,12 +19,12 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     #travelling-2 #container {
       width: 1014px;
       height: 200px;
     }
-    
+
     #travelling-2 div.image {
       float: left;
       padding: 25px 10px;
@@ -35,7 +35,7 @@
       height: 200px;
       margin: 0px;
       padding: 0px;
-    }    
+    }
     #travelling-3 li{
       font-family: Georgia, sans-serif;
       margin: 0px;
@@ -46,19 +46,19 @@
       float: left;
     }
   </style>
-  
+
   <script type="text/javascript">
     var travelling_1 = null;
-    
+
     $( function(){
       $( '#travelling-1' ).travelling();
-      
+
       $( '#travelling-2' ).travelling({
         inactive_zone: 10,  // pixels arround div center where the velocity = 0
         max_velocity: 100,  // max velocity
         fps: 20             // frames per second
       });
-      
+
       $( '#travelling-3' ).travelling({
         max_velocity: 10  // max velocity
       });
@@ -72,10 +72,10 @@
     <p><a href="https://github.com/fguillen/TravellingMe">Travelling Me's code</a></p>
     <p><strong>Demo page</strong>: move the mouse pointer over the example divs.</p>
 
-    
+
     <h3>Use</h3>
     <pre>$('#div-id').travelling();</pre>
-    
+
     <section>
       <h1>Travelling 01</h1>
       <p>Travelling with vertical movement</p>
@@ -88,7 +88,7 @@ $( '#travelling-1' ).travelling();
         <img src="./assets/town.jpg" width="873px" height="290px" />
       </div>
     </section>
-    
+
     <section>
       <h1>Travelling 02</h1>
       <p>Travelling of multiple elements</p>
@@ -112,12 +112,12 @@ $( '#travelling-2' ).travelling({
         </div>
       </div>
     </section>
-    
+
     <section>
       <h1>Travelling 03</h1>
       <p>Traveling of a simple list</p>
 
-<pre>      
+<pre>
 $( '#travelling-3' ).travelling({
   max_velocity: 10  // max velocity
 });
@@ -136,24 +136,28 @@ $( '#travelling-3' ).travelling({
         </ul>
       </div>
     </section>
-    
+
     <footer>
       <p>
         <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">Travelling Me jQuery plugin</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://fernandoguillen.info" property="cc:attributionName" rel="cc:attributionURL">Fernando Guillen</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
       </p>
     </footer>
   </div>
-  
-  <!-- google analytics --> 
-  <script type="text/javascript"> 
-  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script> 
-  <script type="text/javascript"> 
-  var pageTracker = _gat._getTracker("UA-3468219-1");
-  pageTracker._initData();
-  pageTracker._trackPageview();
-  </script> 
+
+  <!-- google analytics -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34268044-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
   <!-- google analytics -->
 </body>
 </html>
